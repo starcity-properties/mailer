@@ -54,7 +54,10 @@
                :html    body}]
     (send-mail-async creds data
                      (fn [res]
-                       (put! out-c (update res :body json/parse-string true))))
+                       (try
+                         (put! out-c (update res :body json/parse-string true))
+                         (catch Throwable t
+                           (put! out-c t)))))
     out-c))
 
 
