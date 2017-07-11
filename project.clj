@@ -1,4 +1,4 @@
-(defproject starcity/mailer "0.1.0-SNAPSHOT"
+(defproject starcity/mailer "0.1.0"
   :description "Mail service for Starcity."
   :url "https://github.com/starcity-properties/mailer"
   :license {:name "Eclipse Public License"
@@ -10,6 +10,8 @@
                  [http-kit "2.2.0"]
                  [hiccup "1.0.5"]
                  [cheshire "5.7.1"]]
+
+  :plugins [[s3-wagon-private "1.2.0"]]
 
   :repositories {"releases" {:url        "s3://starjars/releases"
                              :username   :env/aws_access_key
