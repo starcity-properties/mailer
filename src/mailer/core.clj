@@ -2,11 +2,11 @@
   (:refer-clojure :exclude [send])
   (:require [cheshire.core :as json]
             [clojure.core.async :refer [chan put!]]
-            [clojure.spec :as s]
+            [clojure.spec.alpha :as s]
             [mailer.senders :as senders]
             [mailgun.mail :as mail]
             [org.httpkit.client :as http]
-            [toolbelt.predicates :as p]))
+            [toolbelt.async :as ta]))
 
 (declare Mailer)
 
@@ -67,7 +67,7 @@
                      :subject string?
                      :body string?
                      :opts (s/keys :opt-un [::from ::uuid]))
-        :ret p/chan?)
+        :ret ta/chan?)
 
 
 ;; =============================================================================
