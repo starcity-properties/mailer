@@ -6,7 +6,8 @@
             [mailer.senders :as senders]
             [mailgun.mail :as mail]
             [org.httpkit.client :as http]
-            [toolbelt.async :as ta]))
+            [toolbelt.async :as ta]
+            [toolbelt.core :as tb]))
 
 (declare Mailer)
 
@@ -42,16 +43,18 @@
 
 (defn- mailgun-send!
   "Send an email asynchronously."
-  [mailer to subject body {:keys [from uuid]
+  [mailer to subject body {:keys [from cc uuid]
                            :or   {from senders/noreply}
                            :as   opts}]
   (let [out-c (chan 1)
         creds {:key    (:api-key mailer)
                :domain (:domain mailer)}
-        data  {:from    (or (:sender mailer) from)
-               :to      (or (:send-to mailer) to)
-               :subject subject
-               :html    body}]
+        data  (tb/assoc-when
+               {:from    (or (:sender mailer) from)
+                :to      (or (:send-to mailer) to)
+                :subject subject
+                :html    body}
+               :cc cc)]
     (send-mail-async creds data
                      (fn [res]
                        (try
