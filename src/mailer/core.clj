@@ -43,7 +43,7 @@
 
 (defn- mailgun-send!
   "Send an email asynchronously."
-  [mailer to subject body {:keys [from cc uuid]
+  [mailer to subject body {:keys [from cc bcc uuid]
                            :or   {from senders/noreply}
                            :as   opts}]
   (let [out-c (chan 1)
@@ -54,7 +54,8 @@
                 :to      (or (:send-to mailer) to)
                 :subject subject
                 :html    body}
-               :cc cc)]
+               :cc cc
+               :bcc bcc)]
     (send-mail-async creds data
                      (fn [res]
                        (try
