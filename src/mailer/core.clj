@@ -3,7 +3,6 @@
   (:require [cheshire.core :as json]
             [clojure.core.async :refer [chan put!]]
             [clojure.spec.alpha :as s]
-            [mailer.senders :as senders]
             [mailgun.mail :as mail]
             [org.httpkit.client :as http]
             [toolbelt.async :as ta]
@@ -43,9 +42,7 @@
 
 (defn- mailgun-send!
   "Send an email asynchronously."
-  [mailer to subject body {:keys [from cc bcc uuid]
-                           :or   {from senders/noreply}
-                           :as   opts}]
+  [mailer to subject body {:keys [from cc bcc uuid] :as opts}]
   (let [out-c (chan 1)
         creds {:key    (:api-key mailer)
                :domain (:domain mailer)}
