@@ -1,4 +1,4 @@
-(defproject starcity/mailer "0.6.0-SNAPSHOT"
+(defproject starcity/mailer "0.6.0"
   :description "Mail service for Starcity."
   :url "https://github.com/starcity-properties/mailer"
   :license {:name "Eclipse Public License"
